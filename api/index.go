@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -63,14 +64,16 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
-	d := time.Until((t.Time))
-	s := fmt.Sprintf(`"about %s`, humanDuration(d))
+	d := time.Until(t.Time)
 	if d <= 0 {
-		return []byte(s + ` ago"`), nil
+		d = time.Since(t.Time)
+		s := fmt.Sprintf(`"about %s ago"`, strings.ToLower(humanDuration(d)))
+		return []byte(s), nil
 	}
 
 	// Get the duration.
-	return []byte(s + ` from now"`), nil
+	s := fmt.Sprintf(`"about %s from now"`, strings.ToLower(humanDuration(d)))
+	return []byte(s), nil
 
 }
 

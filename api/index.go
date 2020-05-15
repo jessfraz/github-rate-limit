@@ -46,7 +46,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(json))
 }
 
-type Time time.Time
+type Time struct {
+	time.Time
+}
 
 func (t *Time) UnmarshalJSON(b []byte) error {
 	fmt.Printf("time umarshal: %s\n", string(b))
@@ -55,15 +57,14 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	a := Time(time.Unix(i, 0))
-	t = &a
+	t = &Time{time.Unix(i, 0)}
 	return nil
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
 	fmt.Printf("time: %#v\n", t)
 	// Get the duration.
-	return []byte(humanDuration(time.Until(time.Time(t)))), nil
+	return []byte(humanDuration(time.Until(t.Time))), nil
 
 }
 

@@ -65,7 +65,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 func (t Time) MarshalJSON() ([]byte, error) {
 	d := time.Until((t.Time))
 	if d <= 0 {
-		return []byte(`0`), nil
+		return []byte(`""`), nil
 	}
 
 	// Get the duration.

@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/*.go": {
-      "runtime": "@now/go"
-    }
-  },
   "env": {
     "GITHUB_TOKEN": "@github_token"
   }

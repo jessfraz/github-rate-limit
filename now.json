@@ -1,4 +1,5 @@
 {
+  "builds": [{ "src": "api/**/*.go", "use": "@now/go" }],
   "env": {
     "GITHUB_TOKEN": "@github_token"
   }

@@ -62,18 +62,12 @@ type Time struct {
 }
 
 func (t *Time) UnmarshalJSON(b []byte) error {
-	fmt.Println(string(b))
 	i, err := strconv.ParseInt(string(b), 10, 64)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("int: %d\n", i)
-
-	ts := &Time{time.Unix(i, 0)}
-	fmt.Printf("time: %s\n", ts)
-	t = ts
-	fmt.Printf("time (t): %s\n", t)
+	t.Time = time.Unix(i, 0)
 	return nil
 }
 

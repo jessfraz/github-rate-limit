@@ -37,7 +37,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("response: %#v\n", s)
-	fmt.Printf("response time: %#v\n", s.Rate.Reset)
+	fmt.Printf("response time: %s\n", s.Rate.Reset.String())
 
 	// Encode the response and pretty print.
 	json, err := json.MarshalIndent(s, "", "  ")

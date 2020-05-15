@@ -37,6 +37,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("response: %#v\n", s)
+	fmt.Printf("response time: %#v\n", s.Rate.Reset)
 
 	// Encode the response and pretty print.
 	json, err := json.MarshalIndent(s, "", "  ")
@@ -79,6 +80,10 @@ func (t Time) MarshalJSON() ([]byte, error) {
 	s := fmt.Sprintf(`"%s"`, strings.ToLower(humanDuration(d)))
 	return []byte(s), nil
 
+}
+
+func (t Time) String() string {
+	return t.Time.String()
 }
 
 // RateLimit defines the data type for tracking a rate limit.

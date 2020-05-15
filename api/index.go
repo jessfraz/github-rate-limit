@@ -69,23 +69,23 @@ func (t Time) MarshalJSON() ([]byte, error) {
 
 // RateLimit defines the data type for tracking a rate limit.
 type RateLimit struct {
-	Limit     int64 `json:"limit", omitempty`
-	Remaining int64 `json:"remaining", omitempty`
-	Reset     Time  `json:"reset", omitempty`
+	Limit     int64 `json:"limit,omitempty"`
+	Remaining int64 `json:"remaining,omitempty"`
+	Reset     Time  `json:"reset,omitempty"`
 }
 
 // Resources defines the resources data type.
 type Resources struct {
-	Core                RateLimit `json:"core", omitempty`
-	Search              RateLimit `json:"search", omitempty`
-	GraphQL             RateLimit `json:"graphql", omitempty`
-	IntegrationManifest RateLimit `json:"integration_manifest", omitempty`
+	Core                RateLimit `json:"core,omitempty"`
+	Search              RateLimit `json:"search,omitempty"`
+	GraphQL             RateLimit `json:"graphql,omitempty"`
+	IntegrationManifest RateLimit `json:"integration_manifest,omitempty"`
 }
 
 // Response defines the response type.
 type Response struct {
-	Resources Resources `json:"resources", omitempty`
-	Rate      RateLimit `json:"rate", omitempty`
+	Resources Resources `json:"resources,omitempty"`
+	Rate      RateLimit `json:"rate,omitempty"`
 }
 
 // humanDuration returns a human-readable approximation of a duration

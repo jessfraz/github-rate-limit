@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/*.go": {
-      "use": "@now/go"
+      "runtime": "@now/go"
     }
   },
   "env": {

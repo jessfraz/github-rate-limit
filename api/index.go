@@ -62,7 +62,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 
 func (t Time) MarshalJSON() ([]byte, error) {
 	if t.Time.IsZero() {
-		return nil, nil
+		return []byte(""), nil
 	}
 
 	// Get the duration.

@@ -66,6 +66,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 	ts := &Time{time.Unix(i, 0)}
 	fmt.Printf("time: %s\n", ts)
 	t = ts
+	fmt.Printf("time (t): %s\n", t)
 	return nil
 }
 

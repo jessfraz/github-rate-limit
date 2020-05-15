@@ -65,7 +65,8 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 func (t Time) MarshalJSON() ([]byte, error) {
 	d := time.Until((t.Time))
 	fmt.Println(d.String())
-	if d.Seconds() <= 0 {
+	if d <= 0 {
+		fmt.Println("u are here")
 		return []byte(""), nil
 	}
 

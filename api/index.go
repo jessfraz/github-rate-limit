@@ -66,13 +66,11 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 func (t Time) MarshalJSON() ([]byte, error) {
 	d := time.Until(t.Time)
 	if d <= 0 {
-		d = time.Since(t.Time)
-		s := fmt.Sprintf(`"about %s ago"`, strings.ToLower(humanDuration(d)))
-		return []byte(s), nil
+		return []byte(`""`), nil
 	}
 
 	// Get the duration.
-	s := fmt.Sprintf(`"about %s from now"`, strings.ToLower(humanDuration(d)))
+	s := fmt.Sprintf(`"%s"`, strings.ToLower(humanDuration(d)))
 	return []byte(s), nil
 
 }

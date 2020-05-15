@@ -60,6 +60,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
+	fmt.Printf("time: %#v", t)
 	// Get the duration.
 	return []byte(humanDuration(time.Until(time.Time(t)))), nil
 
@@ -67,23 +68,23 @@ func (t Time) MarshalJSON() ([]byte, error) {
 
 // RateLimit defines the data type for tracking a rate limit.
 type RateLimit struct {
-	Limit     int64 `json:"limit"`
-	Remaining int64 `json:"remaining"`
-	Reset     Time  `json:"reset"`
+	Limit     int64 `json:"limit", omitempty`
+	Remaining int64 `json:"remaining", omitempty`
+	Reset     Time  `json:"reset", omitempty`
 }
 
 // Resources defines the resources data type.
 type Resources struct {
-	Core                RateLimit `json:"core"`
-	Search              RateLimit `json:"search"`
-	GraphQL             RateLimit `json:"graphql"`
-	IntegrationManifest RateLimit `json:"integration_manifest"`
+	Core                RateLimit `json:"core", omitempty`
+	Search              RateLimit `json:"search", omitempty`
+	GraphQL             RateLimit `json:"graphql", omitempty`
+	IntegrationManifest RateLimit `json:"integration_manifest", omitempty`
 }
 
 // Response defines the response type.
 type Response struct {
-	Resources Resources `json:"resources"`
-	Rate      RateLimit `json:"rate"`
+	Resources Resources `json:"resources", omitempty`
+	Rate      RateLimit `json:"rate", omitempty`
 }
 
 // humanDuration returns a human-readable approximation of a duration

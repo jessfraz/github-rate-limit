@@ -54,6 +54,7 @@ type Time struct {
 }
 
 func (t *Time) UnmarshalJSON(b []byte) error {
+	fmt.Println(string(b))
 	i, err := strconv.ParseInt(string(b), 10, 64)
 	if err != nil {
 		return err

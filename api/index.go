@@ -29,21 +29,21 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	// Decode the response.
-	var r Response
-	if err := json.NewDecoder(resp.Body).Decode(&r); err != nil {
+	var s Response
+	if err := json.NewDecoder(resp.Body).Decode(&s); err != nil {
 		http.Error(w, fmt.Sprintf("decoding json failed: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	// Encode the response and pretty print.
-	json, err := json.MarshalIndent(r, "", "  ")
+	json, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("encoding json failed: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	// Print the response.
-	fmt.Fprintf(w, json)
+	fmt.Fprintf(w, string(json))
 }
 
 type Time time.Time
@@ -54,13 +54,14 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	t, err = time.Unix(i, 0)
-	return err
+	a := Time(time.Unix(i, 0))
+	t = &a
+	return nil
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
 	// Get the duration.
-	return humanDuration(time.Now().Until(t))
+	return []byte(humanDuration(time.Until(time.Time(t)))), nil
 
 }
 

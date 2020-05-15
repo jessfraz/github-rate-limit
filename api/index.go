@@ -3,7 +3,6 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -30,21 +29,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("reading body failed: %v", err), http.StatusInternalServerError)
-		return
-	}
-
 	// Decode the response.
 	var s Response
-	if err := json.Unmarshal(body, &s); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&s); err != nil {
 		http.Error(w, fmt.Sprintf("decoding json failed: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	fmt.Printf("response: %#v\n", s)
-	fmt.Printf("response time: %s\n", s.Rate.Reset.String())
 
 	// Encode the response and pretty print.
 	json, err := json.MarshalIndent(s, "", "  ")
@@ -72,14 +62,8 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
-	fmt.Println(t.Time.String())
-	d := time.Until(t.Time)
-	if d <= 0 {
-		return []byte(`""`), nil
-	}
-
 	// Get the duration.
-	s := fmt.Sprintf(`"%s"`, strings.ToLower(humanDuration(d)))
+	s := fmt.Sprintf(`"%s"`, strings.ToLower(humanDuration(time.Until(t.Time))))
 	return []byte(s), nil
 
 }

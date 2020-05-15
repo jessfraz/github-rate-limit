@@ -62,7 +62,9 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 
 	fmt.Printf("int: %d\n", i)
 
-	t = &Time{time.Unix(i, 0)}
+	ts := &Time{time.Unix(i, 0)}
+	fmt.Printf("time: %s\n", ts)
+	t = ts
 	return nil
 }
 

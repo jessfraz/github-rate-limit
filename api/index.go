@@ -35,6 +35,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Printf("response: %#v\n", s)
+
 	// Encode the response and pretty print.
 	json, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {

@@ -62,7 +62,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {
-	fmt.Printf("time: %#v\n", t)
+	fmt.Printf("time: %#v\n", t.String())
 	// Get the duration.
 	return []byte(humanDuration(time.Until(t.Time))), nil
 

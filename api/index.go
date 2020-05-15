@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -29,9 +30,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("reading body failed: %v", err), http.StatusInternalServerError)
+		return
+	}
+
 	// Decode the response.
 	var s Response
-	if err := json.NewDecoder(resp.Body).Decode(&s); err != nil {
+	if err := json.Unmarshal(body, &s); err != nil {
 		http.Error(w, fmt.Sprintf("decoding json failed: %v", err), http.StatusInternalServerError)
 		return
 	}

@@ -3,8 +3,7 @@
   "env": {
     "GITHUB_TOKEN": "@github_token"
   },
-  "routes": [
-    { "source": "/*", "destination": "/api" },
-    { "source": "/", "destination": "/api" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api" }
   ]
 }

@@ -7,4 +7,3 @@
     { "source": "/(.*)", "destination": "/api" }
   ]
 }
- 
